@@ -6,6 +6,8 @@ query_grp = parser.add_mutually_exclusive_group()
 
 parser.add_argument("board_arg", 
                     help="Name of Kanban Board")
+
+parser.add_argument("-v", "--version", action="version", version="KanBan? 1.0.0")
 query_grp.add_argument("-d", "--displaytasks",action="store_true", 
                        help="Displays all tasks for a specified Kanban Board.")
 query_grp.add_argument("-a ", "--addtask", nargs=6, 
