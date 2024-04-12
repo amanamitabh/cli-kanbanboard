@@ -37,14 +37,14 @@ def confirmStatus():
 
 
 def getKanbanBoard(boardname):
-    qry = "SELECT * FROM tasks where board = %s;"
+    qry = "SELECT taskname, category, status, priority, assignees, reportees FROM tasks where board = %s;"
     cur_obj.execute(qry, [boardname])
     data = cur_obj.fetchall()
     return data
 
 
 def getTask(taskname, board):
-    qry = "SELECT * FROM tasks WHERE taskname = %s and board = %s;"
+    qry = "SELECT taskname, category, status, priority, assignees, reportees FROM tasks WHERE taskname = %s and board = %s;"
     cur_obj.execute(qry, [taskname, board])
     data = cur_obj.fetchone()
     return data
@@ -52,12 +52,17 @@ def getTask(taskname, board):
 
 def getPrioritySorted(board, sort_order):
     if sort_order == "asc":
-        qry = "SELECT * FROM tasks WHERE board = %s ORDER BY priority ASC;"
+        qry = "SELECT priority, taskname, category, status, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority ASC;"
     else:
-        qry = "SELECT * FROM tasks WHERE board = %s ORDER BY priority DESC;"
+        qry = "SELECT priority, taskname, category, status, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority DESC;"
     cur_obj.execute(qry, [board])
     data = cur_obj.fetchall()
-    print(data)
+    return data
+
+def getStatus(board, status):
+    qry = "SELECT taskname, category, priority, assignees, reportees FROM tasks where board = %s AND STATUS = %s"
+    cur_obj.execute(qry, [board, status])
+    data = cur_obj.fetchall()
     return data
 
 

@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 from qry_funcs import *
+from tables import *
 
 parser = ArgumentParser()   # Creating parser object
 query_grp = parser.add_mutually_exclusive_group()
@@ -23,7 +24,8 @@ query_grp.add_argument("-r", "--removetask", nargs=1, metavar = ("taskname"),
 args = parser.parse_args()
 if args.displaytasks:
     current_board = getKanbanBoard(args.board_arg)
-    printData(current_board)
+    tableFiller(current_board)
+    tablePrinter()
 
 elif args.addtask:
     addTask(args.addtask[0], args.addtask[1], args.addtask[2], args.addtask[3], args.addtask[4], args.addtask[5], args.board_arg)
@@ -35,6 +37,8 @@ elif args.modifytask:
     changeStatus(args.modifytask[0], args.modifytask[1], args.board_arg)
 
 elif args.prioritysorted:
-    getPrioritySorted(args.board_arg, args.prioritysorted)
+    current_board = getPrioritySorted(args.board_arg, args.prioritysorted)
+    tableFiller(current_board)
+    tablePrinter()
 
 closeConnection()
