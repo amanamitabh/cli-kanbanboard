@@ -10,8 +10,15 @@ DB_PASSWD = os.getenv('DB_PASSWORD')
 DB_DATABASENAME = os.getenv('DB_DBNAME')
 
 # Establishing Connection and Cursor Object
-con_obj = mysql.connect(host=DB_HOSTNAME, user=DB_USERNAME, password=DB_PASSWD, database=DB_DATABASENAME)
-cur_obj = con_obj.cursor()
+
+try:
+    con_obj = mysql.connect(host=DB_HOSTNAME, user=DB_USERNAME, password=DB_PASSWD, database=DB_DATABASENAME)
+    cur_obj = con_obj.cursor()
+
+
+except mysql.errors.ProgrammingError or mysql.errors.DatabaseError:
+    print("Error: Could not access database. Verify connection object parameters.")
+    quit()
 
 def printData(fetched_data):
     if fetched_data == []:  # Checking whether data exists after fetching
@@ -25,14 +32,13 @@ def confirmStatus():
     confirm = input("Enter 'Y' if you want to proceed : ")
     if confirm == "Y":
         return True
-    
     else:
         return False
 
 
 def getKanbanBoard(boardname):
-    qry = "SELECT * FROM tasks where ;"
-    cur_obj.execute(qry)
+    qry = "SELECT * FROM tasks where board = %s;"
+    cur_obj.execute(qry, [boardname])
     data = cur_obj.fetchall()
     return data
 
@@ -40,7 +46,7 @@ def getKanbanBoard(boardname):
 def getTask(taskname, board):
     qry = "SELECT * FROM tasks WHERE taskname = %s and board = %s;"
     cur_obj.execute(qry, [taskname, board])
-    data = cur_obj.fetchall()
+    data = cur_obj.fetchone()
     return data
 
 
@@ -82,4 +88,6 @@ def changeStatus(taskname, new_status, board):
         cur_obj.execute(qry, vals)
         con_obj.commit()
 
-con_obj.close()
+
+def closeConnection():
+    con_obj.close()
