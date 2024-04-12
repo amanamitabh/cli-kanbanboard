@@ -52,9 +52,9 @@ def getTask(taskname, board):
 
 def getPrioritySorted(board, sort_order):
     if sort_order == "asc":
-        qry = "SELECT priority, taskname, category, status, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority ASC;"
+        qry = "SELECT taskname, category, status, priority, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority ASC;"
     else:
-        qry = "SELECT priority, taskname, category, status, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority DESC;"
+        qry = "SELECT taskname, category, status, priority, assignees, reportees FROM tasks WHERE board = %s ORDER BY priority DESC;"
     cur_obj.execute(qry, [board])
     data = cur_obj.fetchall()
     return data

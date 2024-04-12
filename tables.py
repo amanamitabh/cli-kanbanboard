@@ -30,8 +30,8 @@ def tableFiller(data):
         elif i[2] == "In Progress":
             table2.add_row(i[0], i[1], str(i[3]), i[4], i[5])
 
-        elif i[3] == "Done":
-            table1.add_row(i[0], i[1], str(i[3]), i[4], i[5])
+        elif i[2] == "Done":
+            table3.add_row(i[0], i[1], str(i[3]), i[4], i[5])
 
 def tablePrinter():
     console = Console()
