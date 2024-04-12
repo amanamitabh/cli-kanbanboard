@@ -63,11 +63,11 @@ def addTask(taskname, category, status, priority, assignees, reportees, board):
 
 def removeTask(taskname, board):
     rem_data = getTask(taskname, board)
-    if printData(rem_data) == 1:
+    if not rem_data:
         print("No Task Found")
         return
-    print("Are you sure this is the task you want to remove? ")
-
+    print(rem_data)
+    print("Are you sure this is the task you want to remove?")
     if confirmStatus():
         vals = [taskname, board]
         qry = "DELETE FROM tasks WHERE taskname = %s AND board = %s;"
@@ -77,11 +77,11 @@ def removeTask(taskname, board):
 
 def changeStatus(taskname, new_status, board):
     upd_data = getTask(taskname, board)
-    if printData(upd_data) == 1:
+    if not upd_data:
         print("No Task Found")
         return
+    print(upd_data)
     print("Are you sure this is the task whose status you want to change?")
-
     if confirmStatus():
         qry = "UPDATE tasks SET status = %s WHERE taskname = %s AND board = %s;"
         vals = [new_status, taskname, board]
