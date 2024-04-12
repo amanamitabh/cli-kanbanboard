@@ -7,7 +7,7 @@ A Kanban Board is a visual project management tool to track status and prioritie
 ![intro](https://github.com/amanamitabh/cli-kanbanboard/assets/101924129/4933c095-4e68-47eb-adf9-aa2621832b21)
 
 ## Features
-- Colourful and eye catching tables using the [rich](https://rich.readthedocs.io/en/stable/index.html) module in python.
+- Colourful and eye catching tables using the [rich](https://github.com/Textualize/rich) module in python.
 - Secure data storage using Google Cloud SQL Database.
 - Support for multiple projects across different boards.
 - Sorting by Task priority.
@@ -26,6 +26,10 @@ DB_DBNAME= <YOUR_DATABASE_NAME>
 DB_USER= <YOUR_USERNAME>
 DB_PASSWORD= <YOUR_PASSWORD>
 ```
+## Process
+
+The entire program was written using Python and MySQL was used to store data provided by the user. I set up a MySQL database on Google Cloud and defined the table structure using SQL queries. The second step involved the use of the [mysql.connector](https://github.com/mysql/mysql-connector-python) to access the database and add, modify and delete data using Python. The [argparse](https://docs.python.org/3/howto/argparse.html) module was used to parse through data from the command line interface arguments. The [rich](https://github.com/Textualize/rich) module was used to beautify the output and provide it in a tabular format.
+
 
 ## Usage
 
@@ -102,3 +106,8 @@ OR
 ```
 python main.py --version
 ```
+
+## TO DO
+
+- Add a login functionality to automatically decide assignees and reportees
+- Implement drag and drop functionality
