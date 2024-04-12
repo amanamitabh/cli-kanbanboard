@@ -8,8 +8,10 @@ parser.add_argument("board_arg",
                     help="Name of Kanban Board")
 
 parser.add_argument("-v", "--version", action="version", version="KanBan? 1.0.0")
+query_grp.add_argument("-p", "--prioritysorted", choices=["asc", "desc"], 
+                       help="Displays tasks for a specified project sorted by priority")
 query_grp.add_argument("-d", "--displaytasks",action="store_true", 
-                       help="Displays all tasks for a specified Kanban Board.")
+                       help="Displays tasks for a specified project.")
 query_grp.add_argument("-a ", "--addtask", nargs=6, 
                        metavar=("taskname", "category", "status", "priority", "assignees", "reportees"),
                        help="Adds task to a specified Kanban Board.")
@@ -31,5 +33,8 @@ elif args.removetask:
 
 elif args.modifytask:
     changeStatus(args.modifytask[0], args.modifytask[1], args.board_arg)
+
+elif args.prioritysorted:
+    getPrioritySorted(args.board_arg, args.prioritysorted)
 
 closeConnection()

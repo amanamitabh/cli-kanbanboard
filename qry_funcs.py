@@ -25,7 +25,7 @@ def printData(fetched_data):
         return 1
     for line in fetched_data:
         print(line)
-        return 0
+    return 0
 
 
 def confirmStatus():
@@ -50,11 +50,21 @@ def getTask(taskname, board):
     return data
 
 
+def getPrioritySorted(board, sort_order):
+    if sort_order == "asc":
+        qry = "SELECT * FROM tasks WHERE board = %s ORDER BY priority ASC;"
+    else:
+        qry = "SELECT * FROM tasks WHERE board = %s ORDER BY priority DESC;"
+    cur_obj.execute(qry, [board])
+    data = cur_obj.fetchall()
+    print(data)
+    return data
+
+
 def addTask(taskname, category, status, priority, assignees, reportees, board):
     try:
         qry = "INSERT INTO tasks VALUES(%s, %s, %s, %s, %s, %s, %s);"
-        vals = [taskname, category, status, priority, assignees, reportees, board]
-        cur_obj.execute(qry, vals)
+        cur_obj.execute(qry, [taskname, category, status, priority, assignees, reportees, board])
         con_obj.commit()
 
     except mysql.errors.IntegrityError: # Prevents code crash when adding duplicate taskname
@@ -69,9 +79,8 @@ def removeTask(taskname, board):
     print(rem_data)
     print("Are you sure this is the task you want to remove?")
     if confirmStatus():
-        vals = [taskname, board]
         qry = "DELETE FROM tasks WHERE taskname = %s AND board = %s;"
-        cur_obj.execute(qry, vals)
+        cur_obj.execute(qry, [taskname, board])
         con_obj.commit()
 
 
@@ -84,10 +93,8 @@ def changeStatus(taskname, new_status, board):
     print("Are you sure this is the task whose status you want to change?")
     if confirmStatus():
         qry = "UPDATE tasks SET status = %s WHERE taskname = %s AND board = %s;"
-        vals = [new_status, taskname, board]
-        cur_obj.execute(qry, vals)
+        cur_obj.execute(qry, [new_status, taskname, board])
         con_obj.commit()
-
 
 def closeConnection():
     con_obj.close()
