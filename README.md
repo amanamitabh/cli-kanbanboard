@@ -1,48 +1,69 @@
-# Kanban?
+# PyKan
 
-## Introduction
+## Overview
 
-A Kanban Board is a visual project management tool to track status and priorities of various subtasks to be completed in a software project. It gives an overview of the current project status and simplifies team communication. This project aims to implement a command line interface based Kanban Board. Kanban? is a CLI based Kanban Board written in Python.
+PyKan is a Command Line Interface (CLI) based Kanban board built in Python.
+It allows users to manage software projects by tracking tasks, priorities, and statuses across multiple boards.
+The tool provides a clear overview of project progress and simplifies task management directly from the terminal.
 
 ![intro](https://github.com/amanamitabh/cli-kanbanboard/assets/101924129/4933c095-4e68-47eb-adf9-aa2621832b21)
 
 ## Features
-- Colourful and eye catching tables using the [rich](https://github.com/Textualize/rich) module in python.
-- Secure data storage using Google Cloud SQL Database.
-- Support for multiple projects across different boards.
-- Sorting by Task priority.
+- Clean, color-coded tables powered by the [rich](https://github.com/Textualize/rich) Python module.
+- Secure data storage using Google Cloud SQL (MySQL).
+- Support for multiple boards.
+- Task sorting based on priority.
+- Add, modify, remove and display tasks using CLI commands.
 
 ## Setup
 
-The prerequisites to run the python script can be found in the requirements.txt file and can be installed using 
+### 1. Clone the repository
+```
+git clone https://github.com/amanamitabh/cli-kanbanboard
+cd cli-kanbanboard
+```
+
+### 2. Install the required dependencies
 ```
 pip install -r requirements.txt
 ```
 
-The next step requires you to create a .env file in the same directory as the rest of the scripts. Paste the below code into the empty .env file:
+### 3. Set up the environment variables
+
+Create a `.env` file in the root directory of the project and add the following environment variables with your database credentials
+
 ```
 DB_HOST= <YOUR_SERVER_HOSTNAME>
 DB_DBNAME= <YOUR_DATABASE_NAME>
 DB_USER= <YOUR_USERNAME>
 DB_PASSWORD= <YOUR_PASSWORD>
 ```
-## Process
 
-The entire program was written using Python and MySQL was used to store data provided by the user. I set up a MySQL database on Google Cloud and defined the table structure using SQL queries. The second step involved the use of the [mysql.connector](https://github.com/mysql/mysql-connector-python) to access the database and add, modify and delete data using Python. The [argparse](https://docs.python.org/3/howto/argparse.html) module was used to parse through data from the command line interface arguments. The [rich](https://github.com/Textualize/rich) module was used to beautify the output and provide it in a tabular format.
+Ensure the MySQL database is configured properly before running the application
 
+## Architecture and Implementation
+
+The application was developed using Python with MySQL as the backend database.
+
+### Database Layer
+- MySQL database hosted on Google Cloud SQL
+- Tables defined using SQL queries
+- CRUD operations implemented using `mysql-connector`
+
+### CLI Layer
+- Command-line argument parsing implemented using `argparse`
+- Output formatting and table rendering handle using `rich`
 
 ## Usage
 
-After following the steps in the setup part of the README.md, you are ready to use Kanban?.
-
-### No Shame in Seeking Help
+After setting up the environment and database, you can use the following commands to manage your Kanban boards and tasks.
 
 ![help](https://github.com/amanamitabh/cli-kanbanboard/assets/101924129/ffabaf3d-bd78-4e14-b3e4-d2734c96f2b7)
 
+### Help
 ```
 python main.py -h
 ```
-OR
 ```
 python main.py --help
 ```
@@ -52,7 +73,6 @@ python main.py --help
 ```
 python main.py <boardname> -a <taskname> <category> <status> <priority> <assignees> <reportees>
 ```
-OR
 ```
 python main.py <boardname> --addtask <taskname> <category> <status> <priority> <assignees> <reportees>
 ```
@@ -62,7 +82,6 @@ python main.py <boardname> --addtask <taskname> <category> <status> <priority> <
 ```
 python main.py <boardname> -m <taskname> <new_status>
 ```
-OR
 ```
 python main.py <boardname> --modifytask <taskname> <new_status>
 ```
@@ -72,7 +91,6 @@ python main.py <boardname> --modifytask <taskname> <new_status>
 ```
 python main.py <boardname> -r <taskname>
 ```
-OR
 ```
 python main.py <boardname> --removetask <taskname>
 ```
@@ -82,7 +100,6 @@ python main.py <boardname> --removetask <taskname>
 ```
 python main.py <boardname> -d
 ```
-OR
 ```
 python main.py <boardname> --displaytasks
 ```
@@ -92,7 +109,6 @@ python main.py <boardname> --displaytasks
 ```
 python main.py <boardname> -p <asc/desc>
 ```
-OR
 ```
 python main.py <boardname> --prioritysorted <asc/desc>
 ```
@@ -102,12 +118,6 @@ python main.py <boardname> --prioritysorted <asc/desc>
 ```
 python main.py -v
 ```
-OR
 ```
 python main.py --version
 ```
-
-## TO DO
-
-- Add a login functionality to automatically decide assignees and reportees
-- Implement drag and drop functionality
